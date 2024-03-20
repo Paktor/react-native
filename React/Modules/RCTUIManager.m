@@ -1375,10 +1375,11 @@ RCT_EXPORT_METHOD(takeSnapshot:(id /* NSString or NSNumber */)target
     if (size.width < 0.1 || size.height < 0.1) {
       size = view.bounds.size;
     }
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    BOOL success = [view drawViewHierarchyInRect:(CGRect){CGPointZero, size} afterScreenUpdates:YES];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:size];
+    UIImage *image = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+      [view drawViewHierarchyInRect:(CGRect){CGPointZero, size} afterScreenUpdates:YES];
+    }];
 
     if (!success || !image) {
       reject(RCTErrorUnspecified, @"Failed to capture view snapshot.", nil);
