@@ -676,7 +676,7 @@ static CGFloat RCTDefaultIfNegativeTo(CGFloat defaultValue, CGFloat x) {
     format.scale = image.scale;
 
     UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:size format:format];
-    UIImage *newImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+    image = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
         [image drawInRect:(CGRect){CGPointZero, size}];
     }];
     contentsCenter = CGRectMake(0, 0, 1, 1);

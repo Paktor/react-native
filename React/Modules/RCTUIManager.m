@@ -1381,7 +1381,7 @@ RCT_EXPORT_METHOD(takeSnapshot:(id /* NSString or NSNumber */)target
       [view drawViewHierarchyInRect:(CGRect){CGPointZero, size} afterScreenUpdates:YES];
     }];
 
-    if (!success || !image) {
+    if (!image) {
       reject(RCTErrorUnspecified, @"Failed to capture view snapshot.", nil);
       return;
     }
