@@ -22,12 +22,11 @@ UIImage *RCTBlurredImageWithRadius(UIImage *inputImage, CGFloat radius)
   if (CGImageGetBitsPerPixel(imageRef) != 32 ||
       CGImageGetBitsPerComponent(imageRef) != 8 ||
       !((CGImageGetBitmapInfo(imageRef) & kCGBitmapAlphaInfoMask))) {
-    UIGraphicsImageRendererFormat *format = [UIGraphicsImageRendererFormat defaultFormat];
-    format.scale = inputImage.scale;
-    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:inputImage.size format:format];
-    imageRef = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
-      [inputImage drawAtPoint:CGPointZero];
-    }].CGImage;
+    IGraphicsBeginImageContextWithOptions(inputImage.size, NO, inputImage.scale);
+    [inputImage drawAtPoint:CGPointZero];
+    inputImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    imageRef = inputImage.CGImage;
   }
 
   vImage_Buffer buffer1, buffer2;
