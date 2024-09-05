@@ -22,7 +22,7 @@ UIImage *RCTBlurredImageWithRadius(UIImage *inputImage, CGFloat radius)
   if (CGImageGetBitsPerPixel(imageRef) != 32 ||
       CGImageGetBitsPerComponent(imageRef) != 8 ||
       !((CGImageGetBitmapInfo(imageRef) & kCGBitmapAlphaInfoMask))) {
-    IGraphicsBeginImageContextWithOptions(inputImage.size, NO, inputImage.scale);
+    UIGraphicsBeginImageContextWithOptions(inputImage.size, NO, inputImage.scale);
     [inputImage drawAtPoint:CGPointZero];
     inputImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
